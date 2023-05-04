@@ -12,7 +12,7 @@ function Button({
   onClickEvent,
   content,
   isDisabled = false,
-  width = "240px",
+  width = "100%",
 }) {
   return (
     <button
