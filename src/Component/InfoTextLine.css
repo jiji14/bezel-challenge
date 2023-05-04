@@ -1,0 +1,15 @@
+.text-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.default-text {
+  color: var(--darkgray);
+}
+.colored-text {
+  color: var(--secondary);
+}
+
+.bold-text {
+  font-weight: bold;
+}
