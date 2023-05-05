@@ -40,7 +40,7 @@ function App() {
       .post(URL_ACCEPT_SALE)
       .then(function (response) {
         if (response.status === 200) {
-          setIsConfirmModalOpen(false);
+          closeConfirmModal();
           toast.success("You have successfully accepted the sale.", {
             position: "bottom-left",
             autoClose: 3000,
@@ -62,7 +62,7 @@ function App() {
       .post(URL_DECLINE_SALE)
       .then(function (response) {
         if (response.status === 200) {
-          setIsConfirmModalOpen(false);
+          closeConfirmModal();
           toast.success("You have successfully declined the sale.", {
             position: "bottom-left",
             autoClose: 3000,
@@ -80,7 +80,16 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <main className="app">
+      <div className="app-title">
+        <img
+          src="https://getbezel.mo.cloudinary.net/static/bezel-nav-logo.png?tx=f_auto,c_limit,w_128,q_auto"
+          alt="logo"
+          className="app-logo"
+        />
+        <h1>Bezel Coding Challenge</h1>
+      </div>
+      <p>Click the 'Check Sale' button to open a confirmation modal.</p>
       <Button
         className="btn-with-background"
         content="Check Sale"
@@ -95,7 +104,7 @@ function App() {
         />
       )}
       <ToastContainer />
-    </div>
+    </main>
   );
 }
 
