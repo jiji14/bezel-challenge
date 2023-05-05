@@ -4,7 +4,17 @@ import Button from "./Button";
 import InfoTextLine from "./InfoTextLine";
 import "./ConfirmModal.css";
 
-function ConfirmModal({ closeModal }) {
+function ConfirmModal({ item, closeModal, acceptSale, declineSale }) {
+  if (item == null) {
+    return;
+  }
+
+  const sellingPrice = (item.salePriceCents / 100).toFixed(2);
+  const commissionRate = (item.commissionRateBips / 100).toFixed(1);
+  const commissionFee = (sellingPrice * commissionRate).toFixed(2);
+  const sellerFee = (item.sellerFeeCents / 100).toFixed(2);
+  const earning = (item.payoutAmountCents / 100).toFixed(2);
+
   return (
     <div className="modal">
       <div className="modal-wrapper">
@@ -22,17 +32,22 @@ function ConfirmModal({ closeModal }) {
               </div>
             </div>
             <div className="modal-btn-wrapper">
-              <Button className="btn-with-background" content="Accept sale" />
+              <Button
+                className="btn-with-background"
+                content="Accept sale"
+                onClickEvent={acceptSale}
+              />
               <Button
                 className="btn-without-background"
                 content="Reject sale"
+                onClickEvent={declineSale}
               />
             </div>
           </div>
           <div className="modal-right-content">
             <div className="modal-right-column modal-img-container">
               <div className="modal-btn-wrapper">
-                <div>Rolex DeepSea Sea-Dweller James Cameron 116660</div>
+                <div>{item.listing?.model?.displayName}</div>
                 <div className="default-text">New / 2014</div>
               </div>
               <img
@@ -45,34 +60,34 @@ function ConfirmModal({ closeModal }) {
               <InfoTextLine
                 className="default-text"
                 subject="Selling Price"
-                content="$17,945.00"
+                content={`$${sellingPrice.toLocaleString()}`}
               />
               <InfoTextLine
                 className="default-text"
-                subject="Selling Price"
-                content="$17,945.00"
+                subject={`Level 1 Commission(${commissionRate}%)`}
+                content={`$${commissionFee.toLocaleString()}`}
               />
               <InfoTextLine
                 className="default-text"
-                subject="Selling Price"
-                content="$17,945.00"
+                subject="Selling fee"
+                content={`$${sellerFee.toLocaleString()}`}
               />
               <InfoTextLine
                 className="default-text"
-                subject="Selling Price"
-                content="$17,945.00"
+                subject="Insured Shipping"
+                content="Free"
               />
               <InfoTextLine
                 className="colored-text"
-                subject="Selling Price"
-                content="$17,945.00"
+                subject="Bezel authentication"
+                content="Free"
               />
             </div>
             <div className="modal-right-column">
               <InfoTextLine
                 className="bold-text"
                 subject="Earnings"
-                content="$22,378.25"
+                content={`$${earning.toLocaleString()}`}
               />
             </div>
           </div>
@@ -83,7 +98,10 @@ function ConfirmModal({ closeModal }) {
 }
 
 ConfirmModal.propTypes = {
+  item: PropTypes.object,
   closeModal: PropTypes.func.isRequired,
+  acceptSale: PropTypes.func.isRequired,
+  declineSale: PropTypes.func.isRequired,
 };
 
 export default ConfirmModal;
