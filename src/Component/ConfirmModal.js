@@ -9,6 +9,11 @@ function ConfirmModal({ item, closeModal, acceptSale, declineSale }) {
     return;
   }
 
+  /**
+   * Takes a number and returns it in USD currency format.
+   * @param {number} num
+   * @returns {string}
+   */
   const convertToUSDFormatt = (num) => {
     return num.toLocaleString("en-US", {
       style: "currency",
@@ -26,22 +31,22 @@ function ConfirmModal({ item, closeModal, acceptSale, declineSale }) {
   const { brand, displayName, referenceNumber } = item.listing?.model;
 
   return (
-    <div className="modal">
+    <div className="modal layout-center">
       <div className="modal-wrapper">
-        <span className="modal-close" onClick={closeModal}>
+        <span className="modal-close-icon" onClick={closeModal}>
           &times;
         </span>
-        <div className="modal-content-wrapper">
-          <div className="modal-left-content">
-            <div className="left-content-desc-wrapper">
-              <div className="modal-gray-text">CONGRATS!</div>
-              <div className="modal-title">Your watch sold!</div>
-              <div className="modal-desc">
+        <main className="modal-content-wrapper">
+          <section className="modal-left-content">
+            <div>
+              <b className="modal-left-silver-text">CONGRATS!</b>
+              <div className="modal-left-title">Your watch sold!</div>
+              <p className="modal-left-desc">
                 You have 1 business day to accept the sale. <br />
                 If you do not accept, it will be automatically rejected.
-              </div>
+              </p>
             </div>
-            <div className="modal-btn-wrapper">
+            <div className="modal-left-btn-wrapper">
               <Button
                 className="btn-with-background"
                 content="Accept sale"
@@ -53,29 +58,32 @@ function ConfirmModal({ item, closeModal, acceptSale, declineSale }) {
                 onClickEvent={declineSale}
               />
             </div>
-          </div>
-          <div className="modal-right-content">
-            <div className="modal-right-column modal-img-container">
-              <div className="modal-btn-wrapper">
-                <div className="dark-text">
+          </section>
+          <section className="modal-right-content">
+            <div
+              className="modal-right-content-item"
+              id="modal-right-img-wrapper"
+            >
+              <div>
+                <h1 className="modal-right-title">
                   {brand?.displayName +
                     " " +
                     displayName +
                     " " +
                     referenceNumber}
-                </div>
-                <div className="default-text">
+                </h1>
+                <div>
                   {item.listing?.condition} /{" "}
                   {item.listing?.created?.slice(0, 4)}
                 </div>
               </div>
               <img
-                className="modal-img"
+                className="modal-right-img"
                 src={item.listing?.images[0]?.image?.url}
                 alt="watch"
               />
             </div>
-            <div className="modal-right-column">
+            <div className="modal-right-content-item">
               <InfoTextLine
                 className="default-text"
                 subject="Selling Price"
@@ -102,15 +110,15 @@ function ConfirmModal({ item, closeModal, acceptSale, declineSale }) {
                 content="Free"
               />
             </div>
-            <div className="modal-right-column">
+            <div className="modal-right-content-item">
               <InfoTextLine
                 className="bold-text"
                 subject="Earnings"
                 content={earning}
               />
             </div>
-          </div>
-        </div>
+          </section>
+        </main>
       </div>
     </div>
   );

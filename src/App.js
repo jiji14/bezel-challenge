@@ -18,7 +18,7 @@ function App() {
   const openConfirmModal = () => {
     axios
       .get(URL_GET_ITEM)
-      .then(function (response) {
+      .then((response) => {
         if (response.data) {
           setItem(response.data);
         }
@@ -26,7 +26,7 @@ function App() {
       .then(() => {
         setIsConfirmModalOpen(true);
       })
-      .catch(function (error) {
+      .catch((error) => {
         toast.error(error.message, {
           position: "bottom-left",
           autoClose: 3000,
@@ -48,7 +48,7 @@ function App() {
           });
         }
       })
-      .catch(function (error) {
+      .catch((error) => {
         toast.error(error.message, {
           position: "bottom-left",
           autoClose: 3000,
@@ -60,7 +60,7 @@ function App() {
   const declineSale = () => {
     axios
       .post(URL_DECLINE_SALE)
-      .then(function (response) {
+      .then((response) => {
         if (response.status === 200) {
           closeConfirmModal();
           toast.success("You have successfully declined the sale.", {
@@ -70,7 +70,7 @@ function App() {
           });
         }
       })
-      .catch(function (error) {
+      .catch((error) => {
         toast.error(error.message, {
           position: "bottom-left",
           autoClose: 3000,

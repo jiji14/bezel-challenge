@@ -3,12 +3,9 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .default-text {
   color: var(--darkgray);
-}
-
-.dark-text {
-  color: var(--primary);
 }
 
 .colored-text {
@@ -16,5 +13,6 @@
 }
 
 .bold-text {
+  color: var(--primary);
   font-weight: bold;
 }
