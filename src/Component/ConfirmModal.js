@@ -5,8 +5,8 @@ import InfoTextLine from "./InfoTextLine";
 import "./ConfirmModal.css";
 
 function ConfirmModal({ item, closeModal, acceptSale, declineSale }) {
-  if (item == null) {
-    return;
+  if (!item) {
+    return null;
   }
 
   /**
@@ -66,15 +66,11 @@ function ConfirmModal({ item, closeModal, acceptSale, declineSale }) {
             >
               <div>
                 <h1 className="modal-right-title">
-                  {brand?.displayName +
-                    " " +
-                    displayName +
-                    " " +
-                    referenceNumber}
+                  {`${brand?.displayName} ${displayName} ${referenceNumber}`}
                 </h1>
                 <div>
-                  {item.listing?.condition} /{" "}
-                  {item.listing?.created?.slice(0, 4)}
+                  {`${item.listing?.condition} / 
+                  ${item.listing?.created?.slice(0, 4) ?? ""}`}
                 </div>
               </div>
               <img
