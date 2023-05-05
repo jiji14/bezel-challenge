@@ -6,6 +6,11 @@
 .default-text {
   color: var(--darkgray);
 }
+
+.dark-text {
+  color: var(--primary);
+}
+
 .colored-text {
   color: var(--secondary);
 }

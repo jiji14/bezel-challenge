@@ -9,11 +9,21 @@ function ConfirmModal({ item, closeModal, acceptSale, declineSale }) {
     return;
   }
 
-  const sellingPrice = (item.salePriceCents / 100).toFixed(2);
-  const commissionRate = (item.commissionRateBips / 100).toFixed(1);
-  const commissionFee = (sellingPrice * commissionRate).toFixed(2);
-  const sellerFee = (item.sellerFeeCents / 100).toFixed(2);
-  const earning = (item.payoutAmountCents / 100).toFixed(2);
+  const convertToUSDFormatt = (num) => {
+    return num.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+  };
+
+  const sellingPrice = convertToUSDFormatt(item.salePriceCents / 100);
+  const commissionRate = convertToUSDFormatt(item.commissionRateBips / 100);
+  const commissionFee = convertToUSDFormatt(
+    ((item.salePriceCents / 100) * item.commissionRateBips) / 100 / 100
+  );
+  const sellerFee = convertToUSDFormatt(item.sellerFeeCents / 100);
+  const earning = convertToUSDFormatt(item.payoutAmountCents / 100);
+  const { brand, displayName, referenceNumber } = item.listing?.model;
 
   return (
     <div className="modal">
@@ -25,8 +35,8 @@ function ConfirmModal({ item, closeModal, acceptSale, declineSale }) {
           <div className="modal-left-content">
             <div className="left-content-desc-wrapper">
               <div className="modal-gray-text">CONGRATS!</div>
-              <div className="modal-title">Your watch Sold!</div>
-              <div>
+              <div className="modal-title">Your watch sold!</div>
+              <div className="modal-desc">
                 You have 1 business day to accept the sale. <br />
                 If you do not accept, it will be automatically rejected.
               </div>
@@ -47,12 +57,21 @@ function ConfirmModal({ item, closeModal, acceptSale, declineSale }) {
           <div className="modal-right-content">
             <div className="modal-right-column modal-img-container">
               <div className="modal-btn-wrapper">
-                <div>{item.listing?.model?.displayName}</div>
-                <div className="default-text">New / 2014</div>
+                <div className="dark-text">
+                  {brand?.displayName +
+                    " " +
+                    displayName +
+                    " " +
+                    referenceNumber}
+                </div>
+                <div className="default-text">
+                  {item.listing?.condition} /{" "}
+                  {item.listing?.created?.slice(0, 4)}
+                </div>
               </div>
               <img
                 className="modal-img"
-                src="https://getbezel.mo.cloudinary.net/sandbox/96895358-2f6a-468a-88cd-c65a804dc8da.png"
+                src={item.listing?.images[0]?.image?.url}
                 alt="watch"
               />
             </div>
@@ -60,17 +79,17 @@ function ConfirmModal({ item, closeModal, acceptSale, declineSale }) {
               <InfoTextLine
                 className="default-text"
                 subject="Selling Price"
-                content={`$${sellingPrice.toLocaleString()}`}
+                content={sellingPrice}
               />
               <InfoTextLine
                 className="default-text"
                 subject={`Level 1 Commission(${commissionRate}%)`}
-                content={`$${commissionFee.toLocaleString()}`}
+                content={commissionFee}
               />
               <InfoTextLine
                 className="default-text"
                 subject="Selling fee"
-                content={`$${sellerFee.toLocaleString()}`}
+                content={sellerFee}
               />
               <InfoTextLine
                 className="default-text"
@@ -87,7 +106,7 @@ function ConfirmModal({ item, closeModal, acceptSale, declineSale }) {
               <InfoTextLine
                 className="bold-text"
                 subject="Earnings"
-                content={`$${earning.toLocaleString()}`}
+                content={earning}
               />
             </div>
           </div>
