@@ -26,10 +26,6 @@
   top: 0;
   right: 20px;
   font-size: 40px;
-}
-
-.modal-close:hover,
-.modal-close:focus {
   text-decoration: none;
   cursor: pointer;
 }
